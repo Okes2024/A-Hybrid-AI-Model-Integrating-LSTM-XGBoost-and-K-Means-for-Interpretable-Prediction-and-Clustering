@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Research Poster - Water Quality Assessment</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+      color: #333;
+    }
+    .poster {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      background: white;
+      padding: 40px;
+      max-width: 1200px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section {
+      padding: 10px;
+    }
+    h2 {
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .footer {
+      grid-column: span 3;
+      text-align: center;
+      padding-top: 20px;
+      font-size: 0.9em;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="poster">
+    <div class="section">
+      <h2>Title</h2>
+      <p><strong>Hybrid Machine Learning Framework for Water Quality Assessment and Clustering in the Niger Delta</strong></p>
+      <p><em>Agbozu Ebingiye Nelvin, 2024</em></p>
+    </div>
+
+    <div class="section">
+      <h2>Objective</h2>
+      <p>To develop a scalable ML-based framework for predicting Water Quality Index (WQI) and identifying pollution clusters across Bayelsa State using field data and machine learning models.</p>
+    </div>
+
+    <div class="section">
+      <h2>Data</h2>
+      <p>50 geolocated water samples analyzed across 10 parameters (pH, EC, TDS, NO3, Cl, SO4, Ca, Mg, Na, Fe). WQI computed based on WHO guidelines.</p>
+    </div>
+
+    <div class="section">
+      <h2>Methods</h2>
+      <ul>
+        <li><strong>Regression:</strong> RF, XGBoost, LSTM</li>
+        <li><strong>Classification:</strong> WQI class prediction</li>
+        <li><strong>Clustering:</strong> K-Means for contamination grouping</li>
+        <li><strong>Spatial Mapping:</strong> Heatmaps and cluster overlays</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Key Findings</h2>
+      <ul>
+        <li>XGBoost outperformed others (R² = 0.95, AUC = 0.96)</li>
+        <li>Iron, Nitrate, and EC were key drivers</li>
+        <li>Majority classified as Poor or Very Poor</li>
+        <li>K-Means revealed three chemical clusters</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p>This hybrid ML framework provides an efficient and interpretable tool for water quality monitoring, supporting SDG 6: Clean Water and Sanitation in underserved regions.</p>
+    </div>
+
+    <div class="footer">
+      Poster generated using Python, TensorFlow, Scikit-learn, XGBoost, and HTML/CSS. Data collected from Bayelsa State, Nigeria.
+    </div>
+  </div>
+</body>
+</html>

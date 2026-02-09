@@ -1,0 +1,120 @@
+# Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error, confusion_matrix, roc_auc_score, roc_curve, classification_report
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from xgboost import XGBRegressor, XGBClassifier
+from sklearn.cluster import KMeans
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
+from tensorflow.keras.utils import to_categorical
+
+# Load Data
+df = pd.read_csv("Water Parameters.csv")
+
+# WHO Standards
+standards = {
+    "pH": {"Sn": 8.5, "V_ideal": 7.0},
+    "EC": {"Sn": 1500, "V_ideal": 0},
+    "TDS": {"Sn": 1000, "V_ideal": 0},
+    "NO3": {"Sn": 50, "V_ideal": 0},
+    "Cl": {"Sn": 250, "V_ideal": 0},
+    "SO4": {"Sn": 250, "V_ideal": 0},
+    "Ca": {"Sn": 75, "V_ideal": 0},
+    "Mg": {"Sn": 50, "V_ideal": 0},
+    "Na": {"Sn": 200, "V_ideal": 0},
+    "Iron": {"Sn": 0.3, "V_ideal": 0}
+}
+
+# Compute WQI
+qn_values = pd.DataFrame()
+for param, limits in standards.items():
+    Sn = limits["Sn"]
+    V_ideal = limits["V_ideal"]
+    qn_values[param] = ((df[param] - V_ideal) / (Sn - V_ideal)) * 100
+
+weights = {param: 1 / limits["Sn"] for param, limits in standards.items()}
+total_weight = sum(weights.values())
+weights = {param: w / total_weight for param, w in weights.items()}
+df["WQI"] = sum(qn_values[param] * weights[param] for param in qn_values.columns)
+
+# Classify WQI
+def classify_wqi(wqi):
+    if wqi <= 50:
+        return "Excellent"
+    elif wqi <= 100:
+        return "Good"
+    elif wqi <= 200:
+        return "Poor"
+    elif wqi <= 300:
+        return "Very Poor"
+    else:
+        return "Unsuitable"
+
+df["WQI_Class"] = df["WQI"].apply(classify_wqi)
+df["Town"] = df.get("Town", [f"Town {i+1}" for i in range(len(df))])
+
+# Features and Targets
+features = list(standards.keys())
+X = df[features]
+y_reg = df["WQI"]
+y_cls = LabelEncoder().fit_transform(df["WQI_Class"])
+
+# Standardize Features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Split Data
+X_train, X_test, y_train_reg, y_test_reg = train_test_split(X_scaled, y_reg, test_size=0.2, random_state=42)
+_, _, y_train_cls, y_test_cls = train_test_split(X_scaled, y_cls, test_size=0.2, random_state=42)
+
+# Train Regression Models
+rf_reg = RandomForestRegressor(random_state=42).fit(X_train, y_train_reg)
+xgb_reg = XGBRegressor(random_state=42).fit(X_train, y_train_reg)
+rf_pred_reg = rf_reg.predict(X_test)
+xgb_pred_reg = xgb_reg.predict(X_test)
+
+# Evaluate Regression
+print("Random Forest R²:", r2_score(y_test_reg, rf_pred_reg))
+print("XGBoost R²:", r2_score(y_test_reg, xgb_pred_reg))
+
+# Train Classification Models
+rf_cls = RandomForestClassifier(random_state=42).fit(X_train, y_train_cls)
+xgb_cls = XGBClassifier(random_state=42).fit(X_train, y_train_cls)
+rf_pred_cls = rf_cls.predict(X_test)
+xgb_pred_cls = xgb_cls.predict(X_test)
+
+# AUC and Confusion Matrix
+y_test_cls_bin = to_categorical(y_test_cls)
+xgb_pred_proba = xgb_cls.predict_proba(X_test)
+xgb_auc = roc_auc_score(y_test_cls_bin, xgb_pred_proba, average='weighted', multi_class='ovr')
+print("XGBoost Classification AUC:", xgb_auc)
+print("XGBoost Confusion Matrix:\n", confusion_matrix(y_test_cls, xgb_pred_cls))
+
+# Clustering
+kmeans = KMeans(n_clusters=3, random_state=42)
+df["Cluster"] = kmeans.fit_predict(X_scaled)
+
+# LSTM for Regression
+X_lstm = X_scaled.reshape((X_scaled.shape[0], 1, X_scaled.shape[1]))
+X_train_lstm, X_test_lstm, y_train_lstm, y_test_lstm = train_test_split(X_lstm, y_reg, test_size=0.2, random_state=42)
+lstm_model = Sequential([
+    LSTM(50, activation='relu', input_shape=(1, X_scaled.shape[1])),
+    Dense(1)
+])
+lstm_model.compile(optimizer='adam', loss='mse')
+lstm_model.fit(X_train_lstm, y_train_lstm, epochs=100, verbose=0)
+lstm_pred = lstm_model.predict(X_test_lstm).flatten()
+
+# Visualization: Example Figure (Feature Importance)
+importances = rf_reg.feature_importances_
+feat_df = pd.DataFrame({'Feature': features, 'Importance': importances}).sort_values(by='Importance', ascending=False)
+plt.figure(figsize=(10, 6))
+sns.barplot(data=feat_df, x='Importance', y='Feature')
+plt.title('Feature Importance - Random Forest')
+plt.tight_layout()
+plt.show()
