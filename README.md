@@ -49,4 +49,4 @@ Real-time contamination detection in underserved regions
 📜 Citation
 If using this work, please cite:
 
-Akajiaku and Eteh . "Hybrid ML Framework for Water Quality and Contamination Mapping in Nigeria." (Under review, Springer, 2025).
+Chukwuemeka, P., Imoni, O., Mogo, F.C. et al. A hybrid AI model integrating LSTM, XGBoost, and K-means for interpretable prediction and clustering of water quality in data-scarce regions. Discov Civ Eng 3, 24 (2026). https://doi.org/10.1007/s44290-026-00417-x
