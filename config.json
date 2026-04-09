@@ -1,0 +1,21 @@
+{
+  "features": [
+    "pH",
+    "EC",
+    "TDS",
+    "NO3",
+    "Cl",
+    "SO4",
+    "Ca",
+    "Mg",
+    "Na",
+    "Iron"
+  ],
+  "n_clusters": 2,
+  "classes": [
+    "Excellent",
+    "Good"
+  ],
+  "timestamp": "2026-04-07T20:47:57.513988",
+  "lstm_format": "keras"
+}
