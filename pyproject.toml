@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hybrid-water-quality-ai"
+version = "2.0.0"
+description = "Hybrid AI model integrating LSTM, XGBoost, and K-Means for water quality prediction"
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "pandas>=1.5.0",
+    "numpy>=1.21.0",
+    "scikit-learn>=1.2.0",
+    "xgboost>=1.7.0",
+    "tensorflow>=2.10.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+    "joblib>=1.2.0",
+]
