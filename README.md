@@ -349,42 +349,5 @@ This project is the implementation codebase for the following peer-reviewed publ
 
 <div align="center">
 
-## 👤 Author
 
-**Name:** Agbozu Ebingiye Nelvin
 
-🌍 Environmental Data Scientist | GIS & Remote Sensing | Machine Learning | Climate Analytics
-📍 Port Harcourt, Rivers State, Nigeria
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/agbozu-ebi/)
-[![GitHub](https://img.shields.io/badge/GitHub-Nelvinebi-181717?style=flat-square&logo=github)](https://github.com/Nelvinebi)
-[![Email](https://img.shields.io/badge/Email-nelvinebingiye%40gmail.com-D14836?style=flat-square&logo=gmail)](mailto:nelvinebingiye@gmail.com)
-
-</div>
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — free to use, adapt, and build upon for research, education, and environmental analytics. See the [LICENSE](LICENSE) file for full details.
-
----
-
-## 🙌 Acknowledgements
-
-- **WHO** for water quality standards used in WQI computation
-- **Scikit-learn, TensorFlow, and XGBoost** open-source communities
-- **Streamlit and Folium** for enabling rapid interactive dashboard deployment
-- Co-authors and reviewers of the Discover Civil Engineering publication
-
----
-
-<div align="center">
-
-⭐ **If this project helped you, please consider starring the repo!**
-
-*Part of a broader portfolio of Environmental Data Science and AI projects focused on the Niger Delta and West African water systems.*
-
-🔗 [View All Projects](https://github.com/Nelvinebi?tab=repositories) · [Connect on LinkedIn](https://www.linkedin.com/in/agbozu-ebi/) · [Published Paper](https://link.springer.com/article/10.1007/s44290-026-00417-x)
-
-</div>
